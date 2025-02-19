@@ -1,3 +1,5 @@
+import path from "path";
+import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -13,27 +15,37 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// To make the code more readable, we will use `router` to handle each resource.
+// Serve API routes
 app.use("/api/todos", todoRouter);
-
 app.get("/heartbeat", (_, res) => {
   return res.send({ message: "Hello World!" });
 });
 
+// MongoDB connection
 const port = process.env.PORT || 8000;
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URL, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URL)
   .then(() => {
-    // We move app.listen() here to make sure that the server is started after the connection to the database is established.
-    app.listen(port, () =>
-      console.log(`Server running on port http://localhost:${port}`),
-    );
     console.log("Connected to MongoDB");
+
+    // Serve frontend files in production
+    if (process.env.NODE_ENV === "production") {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = path.dirname(__filename);
+      app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+      // Serve `index.html` for any unknown route
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+      });
+    }
+
+    // Start the server
+    app.listen(port, () =>
+      console.log(`Server running on port http://localhost:${port}`)
+    );
   })
   .catch((error) => {
     console.log(error.message);

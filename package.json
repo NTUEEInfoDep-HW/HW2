@@ -6,7 +6,13 @@
   "license": "MIT",
   "scripts": {
     "install:all": "cd frontend && pnpm install && cd ../backend && pnpm install",
+    "install": "npm install --filter ./backend && npm install --filter ./frontend",
     "frontend": "cd frontend && pnpm dev",
-    "backend": " cd backend && pnpm dev"
+    "backend": " cd backend && pnpm dev",
+    "build": "npm --filter frontend run build",
+    "start": "npm run build && npm --filter backend start"
+  },
+  "engines": {
+    "node": "18"
   }
 }
