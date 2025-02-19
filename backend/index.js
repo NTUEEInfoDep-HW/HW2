@@ -1,5 +1,3 @@
-import path from "path";
-import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -29,18 +27,6 @@ mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Connected to MongoDB");
-
-    // Serve frontend files in production
-    if (process.env.NODE_ENV === "production") {
-      const __filename = fileURLToPath(import.meta.url);
-      const __dirname = path.dirname(__filename);
-      app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-      // Serve `index.html` for any unknown route
-      app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-      });
-    }
 
     // Start the server
     app.listen(port, () =>
