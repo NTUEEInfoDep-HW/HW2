@@ -6,30 +6,28 @@
 ### 1. Install dependencies
 
 ```bash
-cd backend
-pnpm install
+# HW2
+pnpm install:all
 ```
+
+### 2. Setup `.env`
+
+```bash
+# HW2/backend
+cp .env.example .env
+```
+
+go to the mongodb dashboard to create a cluster and a db user. 
 
 ### 2. Run the server
 
 ```bash
-pnpm start
+# HW2
+pnpm backend
 ```
 
-### 3. Open the frontend
-
-Open `frontend/index.html` by clicking it in your file explorer.
-
-Or if you're on ubuntu, you can run the following command to open it in your browser.
-
+### 3. Run the client
 ```bash
-cd frontend
-pnpm start
-```
-
-If you're on macOS, you can run the following command to open it in your browser.
-
-```bash
-cd frontend
-open index.html
+# HW2
+pnpm frontend
 ```
