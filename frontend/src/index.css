@@ -1,0 +1,12 @@
+body {
+  background-color: #defeff;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 15vh;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3.5rem;
+}
