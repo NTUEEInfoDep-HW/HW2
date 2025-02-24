@@ -1,6 +1,5 @@
 import {
   createContext,
-  useCallback,
   useContext,
   useState,
 } from "react";
@@ -18,14 +17,14 @@ const TodoContext = createContext({
 export function TodoProvider({ children }) {
   const [todos, setTodos] = useState([]);
 
-  const fetchTodos = useCallback(async () => {
+  const fetchTodos = async () => {
     try {
       const { data } = await getTodos();
       setTodos(data);
     } catch (error) {
       alert("Error: failed to fetch todos");
     }
-  }, []);
+  };
 
   return (
     <TodoContext.Provider
